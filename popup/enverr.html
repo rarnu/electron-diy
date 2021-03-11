@@ -1,0 +1,39 @@
+<div id="popEnvErrRoot" class="popRoot"></div>
+<div id="popEnvErr" class="popModule" style="height: 480px;">
+    <div class="title">环境异常
+        <div class="closePop"><a href="javascript:void(0)" onclick="closeEnvErr();">[X]</a></div>
+    </div>
+    <div class="popContent">
+        <div style="color: white">
+            <div>
+                你的运行环境缺少 GraphicsMagick，因此本软件不能正常工作。
+            </div>
+            <div>
+                要安装 GraphicsMagick，你可以遵循以下步骤：
+            </div>
+            <div style="margin-top: 16px;">
+                <p><b>Windows:</b></p>
+                <p>
+                    到以下链接下载 GraphicsMagick 安装包：<br/>
+                    <a style="color: var(--blue_a100);" onclick="openLink('https://sourceforge.net/projects/graphicsmagick/files/graphicsmagick-binaries/');">点击去下载</a><br/>
+                    完成安装后重新启动本软件即可，你有可能需要重启电脑以完成环境变量的刷新。
+                </p>
+                <p><b>MacOSX:</b></p>
+                <p>
+                    在终端执行以下命令以安装 GraphicsMagick：<br/>
+                    <code>$ brew install graphicsmagick</code>
+                </p>
+                <p><b>Linux:</b></p>
+                <p>
+                    在不同发行版的 Linux 下，拥有不同的安装方式，在此仅列举最常用的发行版安装：<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Ubuntu: <code>$ sudo apt install graphicsmagick</code><br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;CentOS: <code>$ sudo yum install GraphicsMagick</code>
+                </p>
+            </div>
+        </div>
+        <div class="div-line" style="margin-top: 8px;"></div>
+        <div class="div-bottom-right">
+            <button class="btn btn-primary" onclick="closeEnvErr();">确定</button>
+        </div>
+    </div>
+</div>

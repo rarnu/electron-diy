@@ -1,0 +1,76 @@
+{
+  "name": "yugioh-diy",
+  "version": "1.0.0",
+  "description": "yugioh diy tool",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder --dir",
+    "make": "electron-builder"
+  },
+  "keywords": [],
+  "author": "rarnu",
+  "email": "rarnu1985@gmail.com",
+  "homepage": "https://github.com/rarnu/electron-diy",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "electron": "^12.0.1"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-toaster": "^2.0.4",
+    "gm": "^1.23.1",
+    "graphicsmagick-static": "^0.1.4",
+    "imagemagick-darwin-static": "^1.0.11",
+    "jquery": "^3.6.0",
+    "uuid": "^8.3.2"
+  },
+  "build": {
+    "appId": "com.rarnu.diy",
+    "copyright": "rarnu",
+    "productName": "游戏王卡片制作器",
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "files": {
+        "filter": [
+          "!doc/*"
+        ]
+      },
+      "icon": "icon.ico"
+    },
+    "mac": {
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "files": {
+        "filter": [
+          "!doc/*"
+        ]
+      },
+      "icon": "icon.icns"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "zip"
+      ],
+      "maintainer": "rarnu",
+      "files": {
+        "filter": [
+          "!doc/*"
+        ]
+      },
+      "icon": "icon.png"
+    }
+  }
+}

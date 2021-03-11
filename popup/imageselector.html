@@ -1,0 +1,14 @@
+<input type="file" id="fileImage" style="display:none" onchange="updateImageFile();">
+<div id="popSelectImageRoot" class="popRoot"></div>
+<div id="popSelectImage" class="popModule">
+    <div class="title">选择卡图
+        <div class="closePop"><a href="javascript:void(0)" onclick="closeSelImg();">[X]</a></div>
+    </div>
+    <div class="popContent">
+        <label><img id="imgSelCard" src="./card/mold/flash.jpg" style="background: yellow; width: 500px; height: auto;"></label>
+        <div class="div-line" style="margin-top: 8px;"></div>
+        <div class="div-bottom-right">
+            <button class="btn btn-info" onclick="doSelectImageFile();">选择图片</button>&nbsp;&nbsp;<button class="btn btn-primary" onclick="cropImageAndReturn();">确定</button>
+        </div>
+    </div>
+</div>
