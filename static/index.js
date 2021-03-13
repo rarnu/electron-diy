@@ -18,6 +18,8 @@ let imageOriginWidth = 0, imageOriginHeight = 0;
 let cropX = 0, cropY = 0, cropW = 0, cropH = 0;
 
 const originData = {
+    lang: 'cn',
+    langEx: 'cn2',
     name: '浮幽櫻',
     _id: '62015408',
     color: 'black',
@@ -30,13 +32,15 @@ const originData = {
     level: 3,
     desc: '這個卡名的效果1回合只能使用1次。①：對方場上的怪獸數量比自己場上的怪獸多的場合，把這張卡從手卡丟棄才能發動。選自己的額外卡組1張卡給雙方確認。那之後，把對方的額外卡組確認，有選的卡的同名卡的場合，那些對方的同名卡全部除外。這個效果在對方回合也能發動。',
     race: '不死族',
+    raceIndex: 5,
     attribute: 'dark',
     copyright: 'ⓒスタジオ·ダイス /集英社·テレビ東京·KONAMI',
     cardbag: 'SD38-JP001',
     lb_num: '',
     lb_desc: '',
     link: [false, false, false, false, false, false, false, false],
-    imageB64: ''
+    imageB64: '',
+    flash: 0
 };
 
 let data = {...originData};
@@ -45,8 +49,41 @@ let data = {...originData};
 
 function onLanguageChange() {
     language = $('#selLanguage')[0].value;
-    onInputCardName();
-    onNameColorClicked();
+
+    switch (language) {
+        case "cn":
+            data.lang = "cn";
+            data.langEx = "cn";
+            card.data.lang = "cn";
+            card.changeConfig(configs.cnSimplify);
+            break;
+        case "cn2":
+            data.lang = "cn";
+            data.langEx = "cn2";
+            card.data.lang = "cn";
+            card.changeConfig(configs.cn);
+            break;
+        case "jp":
+            data.lang = "jp";
+            data.langEx = "jp";
+            card.data.lang = "jp";
+            card.changeConfig(configs.jp);
+            break;
+        case "jp2":
+            data.lang = "jp";
+            data.langEx = "jp2";
+            card.data.lang = "jp";
+            card.changeConfig(configs.jpNotation);
+            break;
+        case "en":
+            data.lang = "en";
+            data.langEx = "jp";
+            card.data.lang = "en";
+            card.changeConfig(configs.en);
+            break;
+    }
+
+    renderRace();
 }
 
 function onInputCardName() {
@@ -76,7 +113,12 @@ function onInputCardCopyright() {
     card.data.copyright = cr;
 }
 
+let monsterType = 'xg';
+
 function onCardTypeClicked(idx) {
+    if (data.type === 'monster') {
+        monsterType = data.type2;
+    }
     for (let i = 0; i < 3; i++) {
         $('#btnType' + i).attr('class', i === idx ? 'btn btn-primary' : 'btn btn-dark');
     }
@@ -88,6 +130,7 @@ function onCardTypeClicked(idx) {
             data.type = 'monster';
             card.data.type = 'monster';
             $('#divMonster')[0].style.display = '';
+            data.type2 = monsterType;
             break;
         case 1:
             data.type = 'spell';
@@ -106,7 +149,7 @@ function onCardTypeClicked(idx) {
 
 function onMagicTypeClicked(idx) {
     for (let i = 0; i < 6; i++) {
-        $('#btnSpell' + i).attr('class', i === idx ? 'btn btn-primary' : 'btn');
+        $('#btnSpell' + i).attr('class', i === idx ? 'btn btn-primary' : 'btn btn-dark');
     }
     switch (idx) {
         case 0:
@@ -138,7 +181,7 @@ function onMagicTypeClicked(idx) {
 
 function onTrapTypeClicked(idx) {
     for (let i = 0; i < 3; i++) {
-        $('#btnTrap' + i).attr('class', i === idx ? 'btn btn-primary' : 'btn');
+        $('#btnTrap' + i).attr('class', i === idx ? 'btn btn-primary' : 'btn btn-dark');
     }
     switch (idx) {
         case 0:
@@ -320,18 +363,30 @@ function onLinkArrowClicked(idx) {
     card.data.link = arr;
 }
 
+function renderRace() {
+    let rStr = card.config.translate.raceList[data.raceIndex];
+    const rAdd = $('#txtCardRace').val().trim();
+    if (rAdd !== '') {
+        rStr = rAdd;
+    }
+    data.race = rStr;
+}
+
 function onMonsterRaceChanged() {
-    const r = $('#selMonsterRace')[0].value;
-    $('#txtCardRace')[0].value = '';
-    data.race = r;
-    card.data.race = r;
+    const rIdx = parseInt($('#selMonsterRace')[0].value);
+    let rStr = card.config.translate.raceList[rIdx];
+    const rAdd = $('#txtCardRace').val().trim();
+    if (rAdd !== '') {
+        rStr = rAdd;
+    }
+    data.race = rStr;
+    data.raceIndex = rIdx;
+    card.data.race = rStr;
+    card.data.raceIndex = rIdx;
 }
 
 function onInputCardRace() {
-    const r = $('#selMonsterRace')[0].value;
-    const r1 = $('#txtCardRace')[0].value;
-    data.race = r1 !== '' ? r1 : r;
-    card.data.race = r1 !== '' ? r1 : r;
+    onMonsterRaceChanged();
 }
 
 /* popup image section */
@@ -414,7 +469,6 @@ function updateImageFile() {
         const realH = imgH * 500 / imgW;
         $('#popSelectImage')[0].style.height = (realH + 130) + 'px';
         if (crop == null) {
-            console.log('crop');
             crop = Jcrop.attach('imgSelCard');
             const rect = Jcrop.Rect.create(0, 0, 200, isPendulum ? 149 : 200);
             cropX = 0;
@@ -511,9 +565,9 @@ function loadCardInfo() {
     card.render();
 
     // UI
-    $('#selLanguage').val('cn');
+    $('#selLanguage').val(data.langEx);
     $('#selLanguage').selectpicker('refresh');
-    language = $('#selLanguage')[0].value;
+    onLanguageChange();
     $('#txtCardName').val(data.name);
     const colorIdx = nameColorToIndex(data.color);
     $('#txtNameColor').val(colorIdx === 4 ? data.color : '');
@@ -533,7 +587,7 @@ function loadCardInfo() {
     onMonsterAttributeClicked(monsterAttributeToIndex(data.attribute));
     onMonsterLevelClicked(parseInt(data.level));
 
-    $('#selMonsterRace').val(data.race);
+    $('#selMonsterRace').val(data.raceIndex);
     $('#selMonsterRace').selectpicker('refresh');
     const raceIdx = $('#selMonsterRace')[0].selectedIndex;
     $('#txtCardRace').val(raceIdx === -1 ? data.race : '');
@@ -596,7 +650,6 @@ function closeAbout() {
 }
 
 function openLink(link) {
-    console.log(link);
     ipc.send('openURL', {url: link});
 }
 

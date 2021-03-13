@@ -37,9 +37,10 @@
             <tr style="height: 40px;">
                 <td style="width: 70px;"><b>卡片语言</b></td>
                 <td style="width: 220px"><select id="selLanguage" class="selectpicker" onchange="onLanguageChange();">
-                    <option value="cn" selected>简体中文</option>
-                    <option value="cn2">繁体中文</option>
+                    <option value="cn2" selected>繁体中文</option>
+                    <option value="cn">简体中文</option>
                     <option value="jp">日文</option>
+                    <option value="jp2">日文注音</option>
                     <option value="en">英文</option>
                 </select></td>
                 <td></td>
@@ -160,31 +161,31 @@
                     <td style="width: 70px;"><b>怪兽种族</b></td>
                     <td>
                         <select id="selMonsterRace" class="selectpicker" onchange="onMonsterRaceChanged();">
-                            <option value="龙族" selected>龙族</option>
-                            <option value="战士族">战士族</option>
-                            <option value="恶魔族">恶魔族</option>
-                            <option value="魔法师族">魔法师族</option>
-                            <option value="天使族">天使族</option>
-                            <option value="不死族">不死族</option>
-                            <option value="岩石族">岩石族</option>
-                            <option value="植物族">植物族</option>
-                            <option value="昆虫族">昆虫族</option>
-                            <option value="水族">水族</option>
-                            <option value="炎族">炎族</option>
-                            <option value="雷族">雷族</option>
-                            <option value="鱼族">鱼族</option>
-                            <option value="海龙族">海龙族</option>
-                            <option value="幻龙族">幻龙族</option>
-                            <option value="恐龙族">恐龙族</option>
-                            <option value="爬虫类族">爬虫类族</option>
-                            <option value="机械族">机械族</option>
-                            <option value="兽族">兽族</option>
-                            <option value="鸟兽族">鸟兽族</option>
-                            <option value="兽战士族">兽战士族</option>
-                            <option value="念动力族">念动力族</option>
-                            <option value="电子界族">电子界族</option>
-                            <option value="幻神兽族">幻神兽族</option>
-                            <option value="创造神族">创造神族</option>
+                            <option value="0" selected>龙族</option>
+                            <option value="1">战士族</option>
+                            <option value="2">恶魔族</option>
+                            <option value="3">魔法师族</option>
+                            <option value="4">天使族</option>
+                            <option value="5">不死族</option>
+                            <option value="6">岩石族</option>
+                            <option value="7">植物族</option>
+                            <option value="8">昆虫族</option>
+                            <option value="9">水族</option>
+                            <option value="10">炎族</option>
+                            <option value="11">雷族</option>
+                            <option value="12">鱼族</option>
+                            <option value="13">海龙族</option>
+                            <option value="14">幻龙族</option>
+                            <option value="15">恐龙族</option>
+                            <option value="16">爬虫类族</option>
+                            <option value="17">机械族</option>
+                            <option value="18">兽族</option>
+                            <option value="19">鸟兽族</option>
+                            <option value="20">兽战士族</option>
+                            <option value="21">念动力族</option>
+                            <option value="22">电子界族</option>
+                            <option value="23">幻神兽族</option>
+                            <option value="24">创造神族</option>
                         </select>
                         <label class="prop-label-short">
                             <input id="txtCardRace" type="text" class="form-control" oninput="onInputCardRace();">
@@ -321,6 +322,12 @@
                 <input id="txtCardCopyright" type="text" class="form-control" oninput="onInputCardCopyright();">
             </label>
         </div>
+<!--        <div class="prop-line">-->
+<!--            <span class="prop-name"><b>闪卡效果</b></span>-->
+<!--            <label class="prop-label">-->
+<!--                <input id="txtShining" type="number" value="0" min="0" max="1" step="0.1" class="form-control" oninput="onInputShining();">-->
+<!--            </label>-->
+<!--        </div>-->
     </div>
 </div>
 
