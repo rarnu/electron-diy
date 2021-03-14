@@ -114,10 +114,12 @@ function onInputCardCopyright() {
 }
 
 let monsterType = 'xg';
+let monsterType3 = '';
 
 function onCardTypeClicked(idx) {
     if (data.type === 'monster') {
         monsterType = data.type2;
+        monsterType3 = data.type3;
     }
     for (let i = 0; i < 3; i++) {
         $('#btnType' + i).attr('class', i === idx ? 'btn btn-primary' : 'btn btn-dark');
@@ -131,16 +133,21 @@ function onCardTypeClicked(idx) {
             card.data.type = 'monster';
             $('#divMonster')[0].style.display = '';
             data.type2 = monsterType;
+            data.type3 = monsterType3;
             break;
         case 1:
             data.type = 'spell';
             card.data.type = 'spell';
+            data.type3 = '';
+            card.data.type3 = '';
             $('#divSpell')[0].style.display = '';
             onMagicTypeClicked(0);
             break;
         case 2:
             data.type = 'trap';
             card.data.type = 'trap';
+            data.type3 = '';
+            card.data.type3 = '';
             $('#divTrap')[0].style.display = '';
             onTrapTypeClicked(0);
             break;
@@ -337,7 +344,10 @@ function onInputCardDef() {
 }
 
 function onInputEffect() {
-    const eff = $('#txtEffect').val();
+    let eff = $('#txtEffect').val();
+    if (language === 'cn2') {
+        off = Card.complex(off);
+    }
     data.desc = eff;
     card.data.desc = eff;
 }
@@ -349,7 +359,10 @@ function onInputCardPScale() {
 }
 
 function onInputPEffect() {
-    const peff = $('#txtPEffect').val();
+    let peff = $('#txtPEffect').val();
+    if (language === 'cn2') {
+        peff = Card.complex(peff);
+    }
     data.lb_desc = peff;
     card.data.lb_desc = peff;
 }
@@ -389,6 +402,12 @@ function onInputCardRace() {
     onMonsterRaceChanged();
 }
 
+function onRandomCodeGen() {
+    const code = ("0000000" + 100000000 * Math.random()).match(/(\d{8})(\.|$)/)[1];
+    $('#txtCardPassword').val(code);
+    onInputCardPassword();
+}
+
 /* popup image section */
 
 function popSelImg() {
@@ -397,6 +416,10 @@ function popSelImg() {
 }
 
 function closeSelImg() {
+    if (crop != null) {
+        crop.destroy();
+        crop = null;
+    }
     $("#popSelectImageRoot")[0].style.display = "none";
     $("#popSelectImage")[0].style.display = "none";
 }
