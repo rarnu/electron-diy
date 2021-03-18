@@ -1,6 +1,6 @@
 {
   "name": "yugioh-diy",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "yugioh diy tool",
   "main": "main.js",
   "scripts": {
@@ -22,13 +22,7 @@
     "electron": "^12.0.1"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "electron-toaster": "^2.0.4",
-    "gm": "^1.23.1",
-    "graphicsmagick-static": "^0.1.4",
-    "imagemagick-darwin-static": "^1.0.11",
-    "jquery": "^3.6.0",
-    "uuid": "^8.3.2"
+    "electron-squirrel-startup": "^1.0.0"
   },
   "build": {
     "appId": "com.rarnu.diy",

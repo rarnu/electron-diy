@@ -2,9 +2,9 @@
 
 一款跨平台的卡片制作器，采用 Electron 制作。
 
-相较于之前写的制卡器，Electron 版效率非常高，采用了 Yami 大佬编写的 ```card.js``` 来完成核心的渲染（部分代码有改）。
+相较于之前写的制卡器，Electron 版效率非常高，采用了 kooriookami 大佬编写的 ```tools-vue``` 来完成核心的渲染（部分代码有改动）。
 
-在使用本制卡器前，首先要确保安装了 GraphicsMagick，这个库用来完成对图像的剪裁等操作，具体的安装方法在程序内有。
+~~在使用本制卡器前，首先要确保安装了 GraphicsMagick，这个库用来完成对图像的剪裁等操作，具体的安装方法在程序内有。~~
 
 - - -
 
@@ -22,6 +22,12 @@ $ electron-builder -l  # 编译 linux 版本
 - - -
 
 CHANGELOG:
+
+**2.0.0**
+
+1. 由于更换了 js 核心代码，版本号直接提升至 2.0.0 了
+2. 新的核心由 kooriookami 大佬开发，原始项目为 [tools-vue](https://github.com/kooriookami/tools-vue)，经由原作者授权使用并同样遵守其 MIT 协议
+3. 现在不再需要使用 GraphicsMagick 了
 
 **1.0.2**
 
@@ -42,5 +48,4 @@ CHANGELOG:
 软件截图:
 
 ![](./screenshot/screenshot.png)
-
 
