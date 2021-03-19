@@ -4,9 +4,9 @@ const path = require('path');
 function createWindow() {
     Menu.setApplicationMenu(null);
     const win = new BrowserWindow({
-        width: 1138,  /* 普通 1138, 调试 1800 */
+        width: 1188,  /* 普通 1188, 调试 1800 */
         height: 1086,
-        resizable: false,
+        // resizable: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
