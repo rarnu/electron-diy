@@ -1,6 +1,6 @@
 {
   "name": "yugioh-diy",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "yugioh diy tool",
   "main": "main.js",
   "scripts": {
