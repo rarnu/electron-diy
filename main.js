@@ -14,7 +14,7 @@ const secret = 'MLhIYijr23XUvrDMxOwS';
 function createWindow() {
     Menu.setApplicationMenu(null);
     window = new BrowserWindow({
-        width: 1188,  /* 普通 1188, 调试 1800 */
+        width: 1540,  /* 普通 1540, 调试 2150 */
         height: 1086,
         // resizable: false,
         webPreferences: {
