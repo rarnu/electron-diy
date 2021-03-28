@@ -86,6 +86,7 @@ function getSalt() {
     return salt;
 }
 
+// 调用翻译接口
 ipcMain.on('translate', (event, args) => {
     console.log('translate');
     let timestamp = new Date().getTime();
@@ -105,4 +106,62 @@ ipcMain.on('translate', (event, args) => {
         event.sender.send('translate-reply', {texts: texts});
     });
 
+});
+
+// 选择批量导出卡图的路径
+ipcMain.on('choose-directory', (event, args) => {
+    // choose-directory-reply
+    dialog.showOpenDialog({
+        title: '选择导出目录',
+        properties: ['openDirectory']
+    }).then((result) => {
+        if (!result.canceled) {
+            event.sender.send('choose-directory-reply', {path: result.filePaths[0]});
+        } else {
+            event.sender.send('choose-directory-reply', {path: ''});
+        }
+    })
+})
+
+function generateCardImageName(baseName) {
+    if (!fs.existsSync(baseName + '.png')) return baseName + '.png';
+    for (let i = 2; i < 100; i++) {
+        if (!fs.existsSync(baseName + '.' + i + '.png')) {
+            return baseName + '.' + i + '.png';
+        }
+    }
+    return baseName + '.' + getSalt() + '.png';
+}
+
+// 批量导出卡图
+ipcMain.on('export-image', (event, args) => {
+    const base64Data = args.b64.replace(/^data:image\/png;base64,/, "");
+    let count = args.count;
+    for (let i = 0; i < count; i++) {
+        let dp = generateCardImageName(args.path + SPLIT + args.id + '_' + args.name);
+        fs.writeFileSync(dp, base64Data, 'base64');
+    }
+    // 导完一张后回调，再导下一张，回调时回传卡片ID
+    event.sender.send('export-image-reply', {id: args.id});
+});
+
+// 请求远程注音
+ipcMain.on('remote-kana', (event, args) => {
+    console.log(args);
+    request.get({
+        url: `http://rarnu.xyz:9987/api/yugioh/kana?q=${encodeURI(args.name)}`,
+        method: 'get'
+    }, (err, resp, body) => {
+        try {
+            console.log(body);
+            const ret = JSON.parse(body);
+            let k = ret.kana;
+            if (!k || k === '') {
+                k = args.name;
+            }
+            event.sender.send('remote-kana-reply', {kanaName: k});
+        } catch (e) {
+            event.sender.send('remote-kana-reply', {kanaName: args.name});
+        }
+    });
 });
