@@ -88,8 +88,6 @@ function getSalt() {
 
 // 调用翻译接口
 ipcMain.on('translate', (event, args) => {
-    console.log('translate');
-    let timestamp = new Date().getTime();
     let q = args.text;
     let salt = getSalt();
     let signStr = `${appid}${q}${salt}${secret}`;
@@ -147,21 +145,32 @@ ipcMain.on('export-image', (event, args) => {
 
 // 请求远程注音
 ipcMain.on('remote-kana', (event, args) => {
-    console.log(args);
+    remoteKana(args.text, (ret) => event.sender.send('remote-kana-reply', {text: ret}));
+});
+
+ipcMain.on('remote-effect-kana', (event, args) => {
+    remoteKana(args.text, (ret) => event.sender.send('remote-effect-kana-reply', {text: ret}));
+});
+
+ipcMain.on('remote-kanji-kana', (event, args) => {
+    remoteKana(args.text, (ret) => event.sender.send('remote-kanji-kana-reply', {text: ret}));
+});
+
+function remoteKana(text /* string */, callback /* (string) -> void */) {
+    let u = `http://rarnu.xyz:9987/api/yugioh/kana?name=${encodeURI(text)}`;
     request.get({
-        url: `http://rarnu.xyz:9987/api/yugioh/kana?q=${encodeURI(args.name)}`,
+        url: u,
         method: 'get'
     }, (err, resp, body) => {
         try {
-            console.log(body);
             const ret = JSON.parse(body);
             let k = ret.kana;
             if (!k || k === '') {
-                k = args.name;
+                k = text;
             }
-            event.sender.send('remote-kana-reply', {kanaName: k});
+            callback(k);
         } catch (e) {
-            event.sender.send('remote-kana-reply', {kanaName: args.name});
+            callback(text);
         }
     });
-});
+}
