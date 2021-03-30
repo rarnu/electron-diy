@@ -1,6 +1,6 @@
 {
   "name": "yugioh-diy",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "yugioh diy tool",
   "main": "main.js",
   "scripts": {
@@ -32,7 +32,7 @@
   "build": {
     "appId": "com.rarnu.diy",
     "copyright": "rarnu",
-    "productName": "游戏王卡片制作器",
+    "productName": "YGODIY",
     "win": {
       "target": [
         "nsis",
