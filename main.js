@@ -157,7 +157,7 @@ ipcMain.on('remote-kanji-kana', (event, args) => {
 });
 
 function remoteKana(text /* string */, callback /* (string) -> void */) {
-    let u = `http://rarnu.xyz:9987/api/yugioh/kana?name=${encodeURI(text)}`;
+    let u = `http://182.92.234.65:9987/api/yugioh/kana?name=${encodeURI(text)}`;
     request.get({
         url: u,
         method: 'get'
