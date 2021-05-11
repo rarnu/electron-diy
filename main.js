@@ -142,35 +142,3 @@ ipcMain.on('export-image', (event, args) => {
     // 导完一张后回调，再导下一张，回调时回传卡片ID
     event.sender.send('export-image-reply', {id: args.id});
 });
-
-// 请求远程注音
-ipcMain.on('remote-kana', (event, args) => {
-    remoteKana(args.text, (ret) => event.sender.send('remote-kana-reply', {text: ret}));
-});
-
-ipcMain.on('remote-effect-kana', (event, args) => {
-    remoteKana(args.text, (ret) => event.sender.send('remote-effect-kana-reply', {text: ret}));
-});
-
-ipcMain.on('remote-kanji-kana', (event, args) => {
-    remoteKana(args.text, (ret) => event.sender.send('remote-kanji-kana-reply', {text: ret}));
-});
-
-function remoteKana(text /* string */, callback /* (string) -> void */) {
-    let u = `http://182.92.234.65:9987/api/yugioh/kana?name=${encodeURI(text)}`;
-    request.get({
-        url: u,
-        method: 'get'
-    }, (err, resp, body) => {
-        try {
-            const ret = JSON.parse(body);
-            let k = ret.kana;
-            if (!k || k === '') {
-                k = text;
-            }
-            callback(k);
-        } catch (e) {
-            callback(text);
-        }
-    });
-}
