@@ -136,7 +136,9 @@ ipcMain.on('export-image', (event, args) => {
     const base64Data = args.b64.replace(/^data:image\/png;base64,/, "");
     let count = args.count;
     for (let i = 0; i < count; i++) {
-        let dp = generateCardImageName(args.path + SPLIT + args.id + '_' + args.name);
+        let fn = args.name;
+        fn = fn.replace(/[\\/:*?\"<>|&!#$%\'=~^@;+,.]/g, '');
+        let dp = generateCardImageName(args.path + SPLIT + args.id + '_' + fn);
         fs.writeFileSync(dp, base64Data, 'base64');
     }
     // 导完一张后回调，再导下一张，回调时回传卡片ID
